@@ -1,0 +1,29 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    margin-block: 1rem;
+    gap: 1rem;
+    button{
+        margin-left: auto;
+    }
+}
+
+table{
+    border: 1px solid gray;
+tr{
+    th,td{
+        &:nth-child(1){
+            min-width: 1rem;
+        }
+        &:nth-child(2){
+            width: auto;
+        }
+        &:nth-child(3){
+            min-width: 4rem;
+        }
+    }
+}
+
+}
+
+

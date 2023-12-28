@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<div mat-dialog-content [formGroup]="questionForm">
+  <mat-form-field appearance="outline" required>
+    <mat-label>Question</mat-label>
+    <textarea autoResize matInput formControlName="question"></textarea>
+    <mat-error *ngIf="questionForm.controls['question'].invalid">Required</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button matDialogClose>Cancel</button>
+  <button mat-button color="primary" (click)="handleCreateQuestion()" [disabled]="questionForm.invalid">Submit</button>
+</div>
+
+<!-- <mat-form-field>
+  <mat-label>Select</mat-label>
+  <mat-select>
+    <mat-option value="one">First option</mat-option>
+    <mat-option value="two">Second option</mat-option>
+  </mat-select>
+</mat-form-field> -->

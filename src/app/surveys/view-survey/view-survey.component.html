@@ -1,0 +1,9 @@
+<ng-container *ngIf="survey">
+  <div class="header">
+    <h2>{{ survey.name }}</h2>
+    <p>{{ survey.description }}</p>
+  </div>
+  <div class="container">
+    <app-list-questions [questionList]="survey.questions"></app-list-questions>
+  </div>
+</ng-container>

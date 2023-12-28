@@ -1,0 +1,65 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+}
+.header {
+  position: sticky;
+  top: 0;
+  background-color: #cdb7f2;
+  padding: 0.5rem 1rem;
+}
+.survey-container {
+  padding: 0.5rem 1rem 3rem 1rem;
+  flex-grow: 1;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgb(255, 255, 255);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #673ab7;
+  }
+}
+.survey {
+  border: 1px solid gray;
+  border-radius: 0.5em;
+  padding: 1rem;
+  margin-block: 1rem;
+  position: relative;
+  p {
+    font-size: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  &:hover {
+    background-color: rgba(104, 58, 183, 0.3);
+    cursor: pointer;
+  }
+  &.active {
+    background-color: #673ab7;
+    color: white;
+  }
+
+  &::after {
+    content: "\203A";
+    font-weight: 400;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0.5rem;
+  }
+}
+
+button {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
