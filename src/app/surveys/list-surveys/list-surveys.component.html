@@ -4,8 +4,8 @@
 <div class="survey-container">
   <ng-container *ngFor="let survey of surveyList">
     <div class="survey" routerLinkActive="active" [routerLink]="['survey', survey.id]">
-      <h4>{{ survey.name }}</h4>
-      <p>{{ survey.description }}</p>
+      <h4 class="title">{{ survey.name }}</h4>
+      <p class="description">{{ survey.description }}</p>
     </div>
   </ng-container>
 </div>

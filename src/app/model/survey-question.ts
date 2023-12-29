@@ -1,7 +1,7 @@
 export interface SurveyQuestion {
   id: string;
   question: string;
-  description?: string;
+  instrctions?: string;
   answerType: string;
   options?: string[];
 }

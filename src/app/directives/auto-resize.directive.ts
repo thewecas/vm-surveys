@@ -1,12 +1,17 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
-  selector: '[appAutoResize]',
+  selector: '[autoResize]',
 })
 export class AutoResizeDirective {
-  @HostListener('input') componenet!: any;
-  constructor() {
-    console.log(this.componenet);
+  @Input() autoResize!: number;
+  constructor(private el: ElementRef) {}
+
+  @HostListener('input') resizeHeight() {
+    if (this.el.nativeElement.scrollHeight < this.autoResize) {
+      this.el.nativeElement.style.height = '';
+      this.el.nativeElement.style.height =
+        this.el.nativeElement.scrollHeight + 'px';
+    }
   }
-  // oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
 }

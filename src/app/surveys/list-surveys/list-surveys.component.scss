@@ -1,6 +1,4 @@
 :host {
-  display: flex;
-  flex-direction: column;
   height: 100vh;
   position: relative;
 }
@@ -12,18 +10,7 @@
 }
 .survey-container {
   padding: 0.5rem 1rem 3rem 1rem;
-  flex-grow: 1;
   overflow: scroll;
-  &::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: rgb(255, 255, 255);
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #673ab7;
-  }
 }
 .survey {
   border: 1px solid gray;
@@ -31,10 +18,16 @@
   padding: 1rem;
   margin-block: 1rem;
   position: relative;
-  p {
+  .title{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .description {
     font-size: 0.8rem;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }

@@ -1,14 +1,71 @@
 <h1 mat-dialog-title>{{ title }}</h1>
 <div mat-dialog-content [formGroup]="questionForm">
-  <mat-form-field appearance="outline" required>
+  <mat-form-field appearance="outline">
     <mat-label>Question</mat-label>
-    <textarea autoResize matInput formControlName="question"></textarea>
-    <mat-error *ngIf="questionForm.controls['question'].invalid">Required</mat-error>
+    <textarea [autoResize]="100" matInput formControlName="question"></textarea>
+    <mat-error *ngIf="questionForm.controls['question'].invalid"
+      >Required</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Answer Type</mat-label>
+    <mat-select formControlName="answerType">
+      <mat-option value="free-text">Free Text</mat-option>
+      <mat-option value="single-choice">Single Choice</mat-option>
+      <mat-option value="multiple-choice">Multiple Choice</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="options-container" *ngIf="isOptionsAvailable">
+    <ng-container
+      formArrayName="options"
+      *ngFor="let options of getOptionsArray(); let i = index"
+    >
+      <div class="option">
+        <mat-form-field appearance="outline">
+          <mat-label>Option {{ i + 1 }}</mat-label>
+          <input matInput [formControlName]="i" />
+          <mat-error *ngIf="options.invalid">Required</mat-error>
+        </mat-form-field>
+        <button mat-icon-button [disabled]="i==0" (click)="removeOption(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+     <button
+      mat-raised-button
+      color="primary"
+      *ngIf="isOptionsAvailable"
+      (click)="addOption()"
+    >
+      Add Option
+    </button>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Instructions (Optional)</mat-label>
+    <textarea
+      class="scroll"
+      [autoResize]="100"
+      matInput
+      formControlName="instrctions"
+    ></textarea>
+    <mat-error *ngIf="questionForm.controls['question'].invalid"
+      >Required</mat-error
+    >
   </mat-form-field>
 </div>
 <div mat-dialog-actions align="end">
   <button mat-button matDialogClose>Cancel</button>
-  <button mat-button color="primary" (click)="handleCreateQuestion()" [disabled]="questionForm.invalid">Submit</button>
+  <button
+    mat-button
+    color="primary"
+    (click)="handleCreateQuestion()"
+    [disabled]="questionForm.invalid"
+  >
+    Submit
+  </button>
 </div>
 
 <!-- <mat-form-field>

@@ -1,14 +1,16 @@
-:host{
+:host {
   display: flex;
 }
 
-app-list-surveys{
-  width: min(50%,300px);
-  border-right: 1px solid gray;
+app-list-surveys {
+  width: min(350px, 30vw);
+  border-right: 1px solid rgb(159, 157, 157);
+  box-shadow: 0 3px 10px rgb(169, 169, 169);
 }
-.outlet-container{
-  margin: 1rem;
-  flex-grow: 1;
-      background-color: hsl(260, 100%, 100%);
-
+.outlet-container {
+  width: max(calc(100% - 350px), 70vw);
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 1rem 2rem;
+  background-color: #f6f3f7;
 }

@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Survey } from '../model/survey';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
+  constructor() {}
 
-  readonly URL = "https://vm-surveys-default-rtdb.asia-southeast1.firebasedatabase.app/";
+  storeSurveyList(surveyList: Survey[]) {
+    localStorage.setItem('surveys', JSON.stringify(surveyList));
+  }
 
-  constructor() { }
+  getSurveyList() {
+    const surveys = localStorage.getItem('surveys');
+    return surveys ? JSON.parse(surveys) : [];
+  }
 }

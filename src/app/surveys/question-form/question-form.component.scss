@@ -12,3 +12,21 @@ textarea{
     resize: none;
     min-height:3vh ;
 }
+
+.options-container{
+  padding-left: 1rem;
+  padding-block: 1rem;
+  border: 1px solid grey;
+  border-radius: 0.5em;
+  transition: all 0.1s linear;
+  margin-bottom: 1rem;
+  button{
+    margin-bottom: 0.5rem;
+  }
+}
+
+
+.option{
+  display: flex;
+  align-items: baseline;
+}

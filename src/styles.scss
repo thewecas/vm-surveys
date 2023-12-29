@@ -1,4 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@include mat.core();
+
+$surveys-primary: mat.define-palette(mat.$deep-purple-palette, 700, 600, 900);
+$surveys-accent: mat.define-palette(mat.$purple-palette, 500);
+$surveys-warn: mat.define-palette(mat.$red-palette);
+
+$surveys-theme: mat.define-light-theme((
+  color: (
+    primary: $surveys-primary,
+    accent: $surveys-accent,
+    warn: $surveys-warn,
+  ),
+  density: 0,
+));
+
+@include mat.all-component-themes($surveys-theme);
+
 * {
   padding: 0;
   margin: 0;
@@ -27,3 +44,21 @@ th,
 strong {
   font-weight: 500 !important;
 }
+
+::-webkit-scrollbar {
+  width: 0.4em;
+  height: 0.4em;
+}
+::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+}
+::-webkit-scrollbar-thumb {
+  background-color: #673ab7;
+  border-radius: 2em;
+}
+
+.mat-dialog-actions{
+  position: unset !important;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

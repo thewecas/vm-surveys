@@ -5,8 +5,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { AutoResizeDirective } from '../directives/auto-resize.directive';
 import { LayoutComponent } from './layout/layout.component';
 import { ListQuestionsComponent } from './list-questions/list-questions.component';
 import { ListSurveysComponent } from './list-surveys/list-surveys.component';
@@ -14,6 +16,7 @@ import { QuestionFormComponent } from './question-form/question-form.component';
 import { SurveyFormComponent } from './survey-form/survey-form.component';
 import { SurveysRoutingModule } from './surveys-routing.module';
 import { ViewSurveyComponent } from './view-survey/view-survey.component';
+import { TakeSurveyComponent } from './take-survey/take-survey.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,8 @@ import { ViewSurveyComponent } from './view-survey/view-survey.component';
     LayoutComponent,
     SurveyFormComponent,
     ViewSurveyComponent,
+    AutoResizeDirective,
+    TakeSurveyComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +38,7 @@ import { ViewSurveyComponent } from './view-survey/view-survey.component';
     ReactiveFormsModule,
     MatDialogModule,
     MatSelectModule,
+    MatIconModule,
   ],
 })
 export class SurveysModule {}
