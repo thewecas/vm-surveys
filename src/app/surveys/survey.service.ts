@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { QuestionResponse, SurveyResponse } from '../model/response';
 import { Survey } from '../model/survey';
 import { SurveyQuestion } from '../model/survey-question';
 import { ApiService } from './api.service';
@@ -9,11 +10,13 @@ import { ApiService } from './api.service';
 })
 export class SurveyService {
   surveyList: Survey[] = [];
+  responseList: SurveyResponse[] = [];
 
   surveyList$ = new BehaviorSubject<Survey[]>(this.surveyList);
   constructor(private api: ApiService) {
     console.log('Constrcuted');
     this.surveyList.push(...this.api.getSurveyList());
+    this.responseList.push(...this.api.getResponseList());
   }
 
   getSurveyList() {
@@ -42,6 +45,36 @@ export class SurveyService {
       ?.questions.push(newQuestion);
     this.api.storeSurveyList(this.surveyList);
   }
+
+  saveResponse(
+    surveyId: string,
+    userEmail: string,
+    responseArray: QuestionResponse[]
+  ) {
+    const surveyResponse = {
+      surveyId: surveyId,
+      userEmail: userEmail,
+      responses: responseArray,
+      dateOfSubmission: new Date(),
+    };
+    this.responseList.push(surveyResponse);
+    this.api.storeResponsesList(this.responseList);
+    console.log(this.responseList);
+  }
+
+  getResponseById(surveyId: string) {
+    return this.responseList.filter(
+      (response) => response.surveyId == surveyId
+    );
+  }
+
+  getQuestionById(surveyId: string, emailId: string) {
+    const surveyQuestions = this.surveyList.find(
+      (survey) => survey.id == surveyId
+    )?.questions;
+  }
+
+  exportData(surveyId: string) {}
 
   // addDummyData() {
   //   this.surveyList.push({

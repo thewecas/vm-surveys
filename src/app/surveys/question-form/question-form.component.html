@@ -20,7 +20,7 @@
   <div class="options-container" *ngIf="isOptionsAvailable">
     <ng-container
       formArrayName="options"
-      *ngFor="let options of getOptionsArray(); let i = index"
+      *ngFor="let options of getOptionsArray(); let i = index;let isLast=last; let isFirst=first"
     >
       <div class="option">
         <mat-form-field appearance="outline">
@@ -28,7 +28,7 @@
           <input matInput [formControlName]="i" />
           <mat-error *ngIf="options.invalid">Required</mat-error>
         </mat-form-field>
-        <button mat-icon-button [disabled]="i==0" (click)="removeOption(i)">
+        <button mat-icon-button [disabled]="isFirst && isLast" (click)="removeOption(i)">
           <mat-icon>close</mat-icon>
         </button>
       </div>

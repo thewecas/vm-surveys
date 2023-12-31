@@ -5,23 +5,35 @@
       <p>{{ survey.description }}</p>
     </div>
     <div class="btn-container">
-      <button mat-stroked-button color="primary" [routerLink]="['/take-survey',survey.id]">
+      <button
+        mat-stroked-button
+        color="primary"
+        [routerLink]="['/take-survey', survey.id]"
+      >
         Take Survey
       </button>
-      <button mat-stroked-button color="primary" (click)="handleAddQuestion()">
-        View Responses
+      <button
+        mat-stroked-button
+        color="primary"
+        disabled
+      >
+        Export Responses
       </button>
     </div>
   </div>
 
-  <div class="questions-container">
-    <h2>Questions</h2>
-    <button mat-stroked-button color="primary" (click)="handleAddQuestion()">
-      Add Question
-    </button>
-
-    <div class="questions">
-      <app-list-questions [surveyId]="survey.id"></app-list-questions>
-    </div>
+  <div class="output-container">
+    <mat-tab-group>
+      <mat-tab label="Questions">
+        <ng-template matTabContent>
+          <app-list-questions [surveyId]="survey.id"></app-list-questions>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Responses">
+        <ng-template matTabContent>
+          <app-view-responses></app-view-responses>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </ng-container>

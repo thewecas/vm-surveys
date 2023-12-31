@@ -1,8 +1,105 @@
 <ng-container *ngIf="survey">
-  <div class="header-container">
-    <div class="header">
-      <h1>{{ survey.name }}</h1>
-      <p>{{ survey.description }}</p>
-    </div>
+  <h1 class="survey-title">{{ survey.name }}</h1>
+  <p class="survey-description">{{ survey.description }}</p>
+
+  <div class="questions-container">
+    <form [formGroup]="surveyResponse" (ngSubmit)="handleSaveResponse()">
+      <div class="question">
+        <mat-form-field appearance="outline">
+          <mat-label for="">Email Address</mat-label>
+          <input matInput formControlName="userEmail" />
+          <mat-error
+            *ngIf="
+              surveyResponse.controls['userEmail'].touched &&
+              surveyResponse.controls['userEmail'].invalid
+            "
+            >Required</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div
+        class="question"
+        *ngFor="let question of survey.questions; let i = index"
+      >
+        <span class="question-no">{{ i + 1 }}.</span>
+        <div class="response-wrapper">
+          <p class="description" [innerText]="question.question"></p>
+          <p
+            class="instructions"
+            *ngIf="question.instrctions"
+            [innerText]="question.instrctions"
+          ></p>
+          <div class="response">
+            <!-- Free Text Input -->
+            <ng-container *ngIf="question.answerType == 'free-text'">
+              <mat-form-field appearance="outline">
+                <textarea
+                  [autoResize]="100"
+                  matInput
+                  [formControlName]="question.id"
+                ></textarea>
+                <mat-error
+                  *ngIf="
+                    surveyResponse.controls[question.id].touched &&
+                    surveyResponse.controls[question.id].invalid
+                  "
+                  >Required</mat-error
+                >
+              </mat-form-field>
+            </ng-container>
+
+            <!-- Single Choice Input -->
+            <ng-container *ngIf="question.answerType == 'single-choice'">
+              <mat-radio-group
+                [formControlName]="question.id"
+                aria-label="Select an option"
+              >
+                <ng-container *ngFor="let option of question.options">
+                  <mat-radio-button [value]="option">{{
+                    option
+                  }}</mat-radio-button>
+                </ng-container>
+                <mat-error
+                  [innerText]="
+                    surveyResponse.controls[question.id].touched &&
+                    surveyResponse.controls[question.id].invalid
+                      ? 'Required'
+                      : '&nbsp;'
+                  "
+                ></mat-error>
+              </mat-radio-group>
+            </ng-container>
+
+            <!-- Multiple Choice Input  -->
+            <ng-container *ngIf="question.answerType == 'multiple-choice'">
+              <ng-container *ngFor="let option of question.options">
+                <mat-checkbox
+                  (change)="addControlToArray(question.id, option, $event)"
+                  >{{ option }}</mat-checkbox
+                >
+              </ng-container>
+              <mat-error
+                [innerText]="
+                  surveyResponse.controls[question.id].touched &&
+                  surveyResponse.controls[question.id].invalid
+                    ? 'Required'
+                    : '&nbsp;'
+                "
+              ></mat-error>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="surveyResponse.invalid"
+      >
+        Submit
+      </button>
+    </form>
   </div>
 </ng-container>

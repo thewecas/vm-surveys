@@ -1,21 +1,25 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @include mat.core();
 
 $surveys-primary: mat.define-palette(mat.$deep-purple-palette, 700, 600, 900);
 $surveys-accent: mat.define-palette(mat.$purple-palette, 500);
 $surveys-warn: mat.define-palette(mat.$red-palette);
 
-$surveys-theme: mat.define-light-theme((
-  color: (
-    primary: $surveys-primary,
-    accent: $surveys-accent,
-    warn: $surveys-warn,
-  ),
-  density: 0,
-));
+$surveys-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $surveys-primary,
+      accent: $surveys-accent,
+      warn: $surveys-warn,
+    ),
+    density: 0,
+  )
+);
 
 @include mat.all-component-themes($surveys-theme);
-
+:root {
+  font-size: min(1rem, 4vw) !important;
+}
 * {
   padding: 0;
   margin: 0;
@@ -29,6 +33,9 @@ button {
 html,
 body {
   height: 100%;
+  width: 100vw;
+  width: 100svw;
+  overflow-x: hidden;
 }
 body {
   margin: 0;
@@ -57,8 +64,43 @@ strong {
   border-radius: 2em;
 }
 
-.mat-dialog-actions{
+.mat-dialog-actions {
   position: unset !important;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+textarea {
+  resize: none !important;
+}
+
+mat-error {
+  font-size: 0.8rem !important;
+  margin-top: 0.25rem;
+}
+.mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+button {
+  font-size: 1rem !important;
+  &:not([mat-icon-button]) {
+    padding-inline: 1rem !important ;
+    min-width: 4rem !important;
+    line-height: 2.25rem !important;
+  }
+}
+mat-form-field {
+  width: 100%;
+}
+table {
+  border: 1px solid gray;
+  border-collapse: collapse;
+  width: 100%;
+}

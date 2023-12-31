@@ -10,7 +10,6 @@
     align-items:self-end;
     flex-wrap: wrap;
     gap: 1rem;
-    border-bottom: 1px solid rgb(198, 199, 200);
     padding-bottom: 2rem;
     .header{
         flex-grow: 1;
@@ -30,15 +29,9 @@
     }
 }
 
-.questions-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    .questions{
-        flex-basis: 100%;
-    }
+.output-container{
+    width: 100%;
 }
-
 
 
 

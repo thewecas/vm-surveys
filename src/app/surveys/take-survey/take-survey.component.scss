@@ -1,0 +1,92 @@
+:host {
+  display: block;
+}
+
+.survey-title,
+.survey-description {
+  background-clip: border-box;
+  padding-inline: 1rem;
+  position: sticky;
+  top: 0;
+  width: min(100%, 720px);
+  margin-inline: auto;
+  &::before {
+    background-color: #c4a1ff;
+    display: block;
+    content: "";
+    width: 150vw;
+    height: 100%;
+    position: absolute;
+    z-index: -999;
+    top: 0;
+    left: -50vw;
+  }
+}
+.survey-title {
+  padding-block: 1rem 0.5rem;
+  z-index: 99;
+}
+.survey-description {
+  padding-bottom: 1rem;
+  top: -20rem;
+  z-index: 98;
+}
+.questions-container {
+  padding:1rem;
+  width: min(100%, 720px);
+  margin-inline: auto;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-block: 1rem;
+    .question {
+      background-color: #f2eaff;
+      border-radius: 0.25rem;
+      padding: 1rem 1rem 0.5rem 1rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: baseline;
+      .question-no {
+        font-weight: 500;
+        font-size: 1.1rem;
+      }
+      .response-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex-grow: 1;
+
+        .description {
+          font-weight: 500;
+          font-size: 1.1rem;
+          &::after{
+            content: '*';
+            padding-left: 0.25rem;
+            color: red;
+          }
+        }
+        .response {
+          width: 100%;
+          padding-right: 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+         
+          mat-radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+        }
+      }
+    }
+    button {
+      margin-left: auto;
+    }
+  }
+}
+::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: #f9f6ff !important;
+}
