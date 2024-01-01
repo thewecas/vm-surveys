@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Survey } from 'src/app/model/survey';
 import { SurveyService } from '../survey.service';
@@ -22,9 +21,5 @@ export class ViewSurveyComponent implements OnInit {
 
   handleExportResponses() {
     if (this.survey) this.service.exportData(this.survey?.id);
-  }
-
-  ngDestroy() {
-    console.log('bye bye');
   }
 }

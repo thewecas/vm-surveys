@@ -76,8 +76,8 @@ mat-error {
   margin-top: 0.25rem;
 }
 .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
-  padding: 0 !important;
-  margin: 0 !important;
+  padding: unset !important;
+  margin: unset !important;
 }
 
 html,
@@ -103,4 +103,32 @@ table {
   border: 1px solid gray;
   border-collapse: collapse;
   width: 100%;
+  tr {
+    th,
+    td {
+      padding: 0.5rem;
+    }
+  }
+}
+
+dialog {
+  top: 50%;
+  left: 50%;
+  background-color: #f2eaff;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  h1 {
+    font-size: 1.5rem;
+    margin-block: 1rem;
+  }
+  button{
+    margin-block: 1rem !important;
+  }
+  &::backdrop {
+  background-color: rgb(53, 53, 53);
+  opacity: 0.8;
+}
 }

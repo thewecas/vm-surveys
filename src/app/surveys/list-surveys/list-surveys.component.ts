@@ -22,8 +22,5 @@ export class ListSurveysComponent implements OnInit {
 
   openSurveyForm() {
     const dialogRef = this._dialog.open(SurveyFormComponent);
-    dialogRef.afterClosed().subscribe((res) => {
-      console.log(res);
-    });
   }
 }

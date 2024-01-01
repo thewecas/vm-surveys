@@ -11,16 +11,24 @@
   <mat-form-field appearance="outline">
     <mat-label>Answer Type</mat-label>
     <mat-select formControlName="answerType">
-      <mat-option value="free-text">Free Text</mat-option>
+      <mat-option value="free-text">Free Text </mat-option>
       <mat-option value="single-choice">Single Choice</mat-option>
       <mat-option value="multiple-choice">Multiple Choice</mat-option>
     </mat-select>
+    <mat-error *ngIf="questionForm.controls['answerType'].invalid"
+      >Required</mat-error
+    >
   </mat-form-field>
 
   <div class="options-container" *ngIf="isOptionsAvailable">
     <ng-container
       formArrayName="options"
-      *ngFor="let options of getOptionsArray(); let i = index;let isLast=last; let isFirst=first"
+      *ngFor="
+        let options of getOptionsArray();
+        let i = index;
+        let isLast = last;
+        let isFirst = first
+      "
     >
       <div class="option">
         <mat-form-field appearance="outline">
@@ -28,12 +36,16 @@
           <input matInput [formControlName]="i" />
           <mat-error *ngIf="options.invalid">Required</mat-error>
         </mat-form-field>
-        <button mat-icon-button [disabled]="isFirst && isLast" (click)="removeOption(i)">
+        <button
+          mat-icon-button
+          [disabled]="isFirst && isLast"
+          (click)="removeOption(i)"
+        >
           <mat-icon>close</mat-icon>
         </button>
       </div>
     </ng-container>
-     <button
+    <button
       mat-raised-button
       color="primary"
       *ngIf="isOptionsAvailable"

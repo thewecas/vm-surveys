@@ -23,6 +23,10 @@ export class ViewResponsesComponent implements OnInit {
     });
   }
 
+  handleExportResponse() {
+    this.service.exportData(this.surveyId);
+  }
+
   getResponse(questionId: string, userEmail: string) {}
 }
 

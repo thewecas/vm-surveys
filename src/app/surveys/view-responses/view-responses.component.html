@@ -1,21 +1,28 @@
 <ng-container *ngIf="survey">
-  <table border="2">
-    <thead>
-      <tr>
+  <button mat-stroked-button color="primary" (click)="handleExportResponse()">
+    Export Responses
+  </button>
+<div class="container">
+  
+    <table border="2">
+      <thead>
+        <tr>
           <th>Date of Submission</th>
           <th>User Email</th>
-        <th *ngFor="let questions of survey.questions">
-          {{ questions.question }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let userResponse of responseList">
-        <td>{{userResponse.dateOfSubmission |date:'short'}}</td>
-        <td *ngFor="let response of userResponse.responses">
-            {{response.answer}}
-        </td>
-    </tr>
-    </tbody>
-  </table>
+          <th *ngFor="let questions of survey.questions">
+            {{ questions.question }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let userResponse of responseList">
+          <td>{{ userResponse.dateOfSubmission | date : "short" }}</td>
+          <td *ngFor="let response of userResponse.responses">
+            {{ response.answer }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
 </ng-container>

@@ -1,29 +1,62 @@
-:host{
+:host {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: min(90vw,400px);
+  width: min(90vw, 400px);
 }
 
-mat-form-field{
+mat-form-field {
   width: 100%;
 }
 
-
-.options-container{
+.options-container {
   padding-left: 1rem;
   padding-block: 1rem;
   border: 1px solid grey;
   border-radius: 0.5em;
   transition: all 0.1s linear;
   margin-bottom: 1rem;
-  button{
+  button {
     margin-bottom: 0.5rem;
   }
 }
 
-
-.option{
+.option {
   display: flex;
   align-items: baseline;
+}
+
+[value="free-text"],[value="single-choice"],[value="multiple-choice"]{
+  &::before{
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    padding-right: 0.5rem;
+  }
+}
+[value="free-text"] {
+  &::before{
+    content: '\e262';
+  }
+}
+[value="single-choice"] {
+  &::before{
+    content: '\e837';
+  }
+}
+
+[value="multiple-choice"] {
+  &::before{
+    content: '\e834';
+  }
 }

@@ -19,6 +19,7 @@ export class TakeSurveyComponent implements OnInit {
   ) {}
   survey!: Survey | null;
   surveyResponse!: FormGroup;
+  isDialogOpen = false;
 
   ngOnInit(): void {
     this.survey = this.service.getSurveyDetails(
@@ -63,7 +64,7 @@ export class TakeSurveyComponent implements OnInit {
     }
   }
 
-  handleSaveResponse() {
+  handleSaveResponse(dialog: HTMLDialogElement) {
     const responseArray: QuestionResponse[] = [];
     Object.entries(this.surveyResponse.controls).forEach(([id, control]) => {
       responseArray.push({
@@ -77,7 +78,11 @@ export class TakeSurveyComponent implements OnInit {
         this.surveyResponse.get('userEmail')?.value,
         responseArray
       );
-    // console.log(this.surveyResponse.controls);
-    // this.service.saveResponse(this.survey?.id,)
+
+    dialog.showModal();
+  }
+
+  reloadPage() {
+    location.reload();
   }
 }

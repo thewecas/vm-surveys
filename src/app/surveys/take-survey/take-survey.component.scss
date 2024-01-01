@@ -32,7 +32,7 @@
   z-index: 98;
 }
 .questions-container {
-  padding:1rem;
+  padding: 1rem;
   width: min(100%, 720px);
   margin-inline: auto;
   form {
@@ -61,10 +61,21 @@
         .description {
           font-weight: 500;
           font-size: 1.1rem;
-          &::after{
-            content: '*';
+          &::after {
+            content: "*";
             padding-left: 0.25rem;
             color: red;
+          }
+        }
+        .instructions {
+          font-size: 0.8rem;
+          &::before {
+            content: "( ";
+            padding-right: 0.15rem;
+          }
+          &::after {
+            content: ")";
+            padding-left: 0.15rem;
           }
         }
         .response {
@@ -73,7 +84,7 @@
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
-         
+
           mat-radio-group {
             display: flex;
             flex-direction: column;

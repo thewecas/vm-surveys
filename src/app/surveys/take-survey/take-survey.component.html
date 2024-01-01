@@ -3,7 +3,7 @@
   <p class="survey-description">{{ survey.description }}</p>
 
   <div class="questions-container">
-    <form [formGroup]="surveyResponse" (ngSubmit)="handleSaveResponse()">
+    <form [formGroup]="surveyResponse" (ngSubmit)="handleSaveResponse(dialog)">
       <div class="question">
         <mat-form-field appearance="outline">
           <mat-label for="">Email Address</mat-label>
@@ -103,3 +103,8 @@
     </form>
   </div>
 </ng-container>
+<dialog #dialog>
+  <h1>Your Response has been Recorded</h1>
+  <p>Thank you</p>
+  <button mat-stroked-button color="primary" (click)="reloadPage()">Submit Another Response</button>
+</dialog>
