@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { SurveyQuestion } from 'src/app/model/survey-question';
 import { SurveyService } from '../survey.service';
 
 @Component({
@@ -12,12 +13,13 @@ export class QuestionFormComponent implements OnInit {
   title = 'Add Question';
   questionForm!: FormGroup;
   isOptionsAvailable: boolean = false;
+  questionData!: SurveyQuestion | null;
 
   constructor(
     private fb: FormBuilder,
     private service: SurveyService,
     private _dialogRef: MatDialogRef<QuestionFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public surveyId: string
+    @Inject(MAT_DIALOG_DATA) public obj: any
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +28,12 @@ export class QuestionFormComponent implements OnInit {
       instrctions: ['', Validators.maxLength(250)],
       answerType: ['', Validators.required],
     });
+
+    if (this.obj.questionId) {
+      this.initializeForm();
+      this.title = 'Edit Question';
+    }
+    if (this.obj.readOnly) this.title = 'View Question';
 
     this.questionForm.get('answerType')?.valueChanges.subscribe((value) => {
       if (value == 'free-text') {
@@ -38,10 +46,8 @@ export class QuestionFormComponent implements OnInit {
     });
   }
   addOptionsControl() {
-    this.questionForm.addControl(
-      'options',
-      this.fb.array([this.fb.control('', [Validators.required])])
-    );
+    this.questionForm.addControl('options', this.fb.array([]));
+    if (this.getOptionsArray().length == 0) this.addOption();
   }
   removeOptionsControl() {
     this.questionForm.removeControl('options');
@@ -51,22 +57,55 @@ export class QuestionFormComponent implements OnInit {
     return (<FormArray>this.questionForm.get('options')).controls;
   }
 
-  addOption() {
-    const control = this.fb.control('', [Validators.required]);
+  addOption(value = '') {
+    const control = this.fb.control(value, [Validators.required]);
     (<FormArray>this.questionForm.get('options')).push(control);
   }
   removeOption(index: number) {
     (<FormArray>this.questionForm.get('options')).removeAt(index);
   }
 
-  handleCreateQuestion() {
-    this.service.addQuestionToSurvey(this.surveyId, {
-      id: crypto.randomUUID(),
-      question: this.questionForm.get('question')?.value,
-      answerType: this.questionForm.get('answerType')?.value,
-      instrctions: this.questionForm.get('instrctions')?.value ?? null,
-      options: this.questionForm.get('options')?.value ?? null,
+  initializeForm() {
+    this.removeOptionsControl();
+
+    this.questionData = this.service.getQuestionData(
+      this.obj.surveyId,
+      this.obj.questionId
+    );
+
+    this.questionForm.patchValue({
+      question: this.questionData?.question,
+      instrctions: this.questionData?.instrctions,
+      answerType: this.questionData?.answerType,
     });
+
+    if (this.questionData?.answerType !== 'free-text') {
+      this.addOptionsControl();
+      this.removeOption(0);
+      this.isOptionsAvailable = true;
+      this.questionData?.options?.forEach((option) => {
+        this.addOption(option);
+      });
+    }
+  }
+
+  enableEdit() {
+    this.obj.readOnly = false;
+    this.title = 'Edit Question';
+  }
+
+  handleCreateQuestion() {
+    this.service.addQuestionToSurvey(
+      this.obj.surveyId,
+      {
+        id: this.obj.questionId ?? crypto.randomUUID(),
+        question: this.questionForm.get('question')?.value,
+        answerType: this.questionForm.get('answerType')?.value,
+        instrctions: this.questionForm.get('instrctions')?.value ?? null,
+        options: this.questionForm.get('options')?.value ?? null,
+      },
+      this.obj.questionId
+    );
 
     this._dialogRef.close();
   }

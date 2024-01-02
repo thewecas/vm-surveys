@@ -2,7 +2,12 @@
 <div mat-dialog-content [formGroup]="questionForm">
   <mat-form-field appearance="outline">
     <mat-label>Question</mat-label>
-    <textarea [autoResize]="100" matInput formControlName="question"></textarea>
+    <textarea
+      [autoResize]="100"
+      matInput
+      [readonly]="obj.readOnly"
+      formControlName="question"
+    ></textarea>
     <mat-error *ngIf="questionForm.controls['question'].invalid"
       >Required</mat-error
     >
@@ -11,16 +16,26 @@
   <mat-form-field appearance="outline">
     <mat-label>Answer Type</mat-label>
     <mat-select formControlName="answerType">
-      <mat-option value="free-text">Free Text </mat-option>
-      <mat-option value="single-choice">Single Choice</mat-option>
-      <mat-option value="multiple-choice">Multiple Choice</mat-option>
+      <mat-option [disabled]="obj.readOnly" value="free-text"
+        >Free Text
+      </mat-option>
+      <mat-option [disabled]="obj.readOnly" value="single-choice"
+        >Single Choice</mat-option
+      >
+      <mat-option [disabled]="obj.readOnly" value="multiple-choice"
+        >Multiple Choice</mat-option
+      >
     </mat-select>
     <mat-error *ngIf="questionForm.controls['answerType'].invalid"
       >Required</mat-error
     >
   </mat-form-field>
 
-  <div class="options-container" *ngIf="isOptionsAvailable">
+  <div
+    class="options-container"
+    [class.paddingRight]="obj.readOnly"
+    *ngIf="isOptionsAvailable"
+  >
     <ng-container
       formArrayName="options"
       *ngFor="
@@ -33,11 +48,12 @@
       <div class="option">
         <mat-form-field appearance="outline">
           <mat-label>Option {{ i + 1 }}</mat-label>
-          <input matInput [formControlName]="i" />
+          <input matInput [readonly]="obj.readOnly" [formControlName]="i" />
           <mat-error *ngIf="options.invalid">Required</mat-error>
         </mat-form-field>
         <button
           mat-icon-button
+          *ngIf="!obj.readOnly"
           [disabled]="isFirst && isLast"
           (click)="removeOption(i)"
         >
@@ -48,7 +64,7 @@
     <button
       mat-raised-button
       color="primary"
-      *ngIf="isOptionsAvailable"
+      *ngIf="isOptionsAvailable && !obj.readOnly"
       (click)="addOption()"
     >
       Add Option
@@ -61,6 +77,7 @@
       class="scroll"
       [autoResize]="100"
       matInput
+      [readonly]="obj.readOnly"
       formControlName="instrctions"
     ></textarea>
     <mat-error *ngIf="questionForm.controls['question'].invalid"
@@ -69,21 +86,29 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-button matDialogClose>Cancel</button>
+  <button mat-stroked-button matDialogClose>Cancel</button>
   <button
-    mat-button
+    mat-stroked-button
+    *ngIf="obj.questionId && !obj.readOnly"
+    (click)="initializeForm()"
+  >
+    Reset
+  </button>
+  <button
+    mat-stroked-button
     color="primary"
     (click)="handleCreateQuestion()"
+    *ngIf="!obj.readOnly"
     [disabled]="questionForm.invalid"
   >
     Submit
   </button>
+  <button
+    mat-stroked-button
+    color="primary"
+    *ngIf="obj.readOnly"
+    (click)="enableEdit()"
+  >
+    Edit
+  </button>
 </div>
-
-<!-- <mat-form-field>
-  <mat-label>Select</mat-label>
-  <mat-select>
-    <mat-option value="one">First option</mat-option>
-    <mat-option value="two">Second option</mat-option>
-  </mat-select>
-</mat-form-field> -->

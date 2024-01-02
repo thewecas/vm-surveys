@@ -25,13 +25,23 @@ export class ListQuestionsComponent implements OnChanges {
       this.questionList = res;
     });
   }
-  handleAddQuestion() {
+  handleAddOrEditQuestion(questionId?: string, isReadOnly = false) {
+    const data = {
+      surveyId: this.surveyId,
+      readOnly: isReadOnly,
+    };
+    if (questionId) Object.assign(data, { questionId });
+
     const dialogRef = this._dialog.open(QuestionFormComponent, {
-      data: this.surveyId,
+      data: data,
     });
   }
 
   trackById(index: number, item: SurveyQuestion) {
     return item.id;
+  }
+
+  handleDeleteQuestion(questionId: string) {
+    this.service.deleteQuestion(this.surveyId, questionId);
   }
 }
