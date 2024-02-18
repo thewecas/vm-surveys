@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
 import { SurveyQuestion } from 'src/app/model/survey-question';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { QuestionFormComponent } from '../question-form/question-form.component';
 import { SurveyService } from '../survey.service';
 
@@ -13,11 +13,7 @@ import { SurveyService } from '../survey.service';
 export class ListQuestionsComponent implements OnChanges {
   @Input() surveyId!: string;
   questionList!: SurveyQuestion[];
-  constructor(
-    private service: SurveyService,
-    private route: ActivatedRoute,
-    private _dialog: MatDialog
-  ) {}
+  constructor(private service: SurveyService, private _dialog: MatDialog) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.questionList = [];
@@ -25,6 +21,7 @@ export class ListQuestionsComponent implements OnChanges {
       this.questionList = res;
     });
   }
+
   handleAddOrEditQuestion(questionId?: string, isReadOnly = false) {
     const data = {
       surveyId: this.surveyId,
@@ -41,7 +38,23 @@ export class ListQuestionsComponent implements OnChanges {
     return item.id;
   }
 
-  handleDeleteQuestion(questionId: string) {
-    this.service.deleteQuestion(this.surveyId, questionId);
+  handleDeleteQuestion(question: any) {
+    console.log(question);
+
+    const dialogRef = this._dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Delete Question',
+        highlight: question.question,
+        body: `Following Question will be deleted. Are you Sure ?`,
+        secondaryActionText: 'No, Cancel',
+        primaryActionText: 'Yes, Delete',
+        primaryColor: 'warn',
+      },
+    });
+    dialogRef.afterClosed().subscribe((deleteSurvey) => {
+      if (deleteSurvey) {
+        this.service.deleteQuestion(this.surveyId, question.id);
+      }
+    });
   }
 }

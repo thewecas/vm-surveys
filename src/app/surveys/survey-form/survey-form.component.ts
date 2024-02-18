@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Survey } from 'src/app/model/survey';
 import { SurveyService } from '../survey.service';
 
 @Component({
@@ -10,10 +11,13 @@ import { SurveyService } from '../survey.service';
 })
 export class SurveyFormComponent implements OnInit {
   title = 'Create Survey';
+  surveyData!: Survey | null;
+
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<SurveyFormComponent>,
-    private service: SurveyService
+    private service: SurveyService,
+    @Inject(MAT_DIALOG_DATA) public surveyId: string
   ) {}
   surveyForm!: FormGroup;
 
@@ -22,16 +26,31 @@ export class SurveyFormComponent implements OnInit {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
     });
+    if (this.surveyId) {
+      this.initializeForm();
+      this.title = 'Edit Survey';
+    }
+  }
+
+  initializeForm() {
+    this.surveyData = this.service.getSurveyDetails(this.surveyId);
+    this.surveyForm.setValue({
+      name: this.surveyData?.name,
+      description: this.surveyData?.description,
+    });
   }
 
   handleCreateSurvey() {
-    this.service.postSurvey({
-      id: crypto.randomUUID(),
-      name: this.surveyForm.get('name')?.value,
-      description: this.surveyForm.get('description')?.value,
-      questions: [],
-      createdOn: new Date(),
-    });
+    this.service.postSurvey(
+      {
+        id: this.surveyId ?? crypto.randomUUID(),
+        name: this.surveyForm.get('name')?.value,
+        description: this.surveyForm.get('description')?.value,
+        questions: [],
+        createdOn: new Date(),
+      },
+      this.surveyId
+    );
     this.dialogRef.close('hi');
   }
 }

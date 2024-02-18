@@ -1,6 +1,6 @@
-    <button mat-stroked-button color="primary" (click)="handleAddOrEditQuestion()">
-      Add Question
-    </button>
+<button mat-stroked-button color="primary" (click)="handleAddOrEditQuestion()">
+  Add Question
+</button>
 
 <table border="2">
   <thead>
@@ -19,13 +19,25 @@
         <td>{{ question.question }}</td>
         <td>
           <div class="action-btn">
-            <button mat-icon-button color="primary" (click)="handleAddOrEditQuestion(question.id,true)">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="handleAddOrEditQuestion(question.id, true)"
+            >
               <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button color="accent" (click)="handleAddOrEditQuestion(question.id)">
+            <button
+              mat-icon-button
+              color="accent"
+              (click)="handleAddOrEditQuestion(question.id)"
+            >
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="handleDeleteQuestion(question.id)">
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="handleDeleteQuestion(question)"
+            >
               <mat-icon>delete</mat-icon>
             </button>
           </div>

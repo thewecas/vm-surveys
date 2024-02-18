@@ -23,8 +23,15 @@ export class SurveyService {
     return this.surveyList$.asObservable();
   }
 
-  postSurvey(newSurvey: Survey) {
-    this.surveyList.push(newSurvey);
+  postSurvey(newSurvey: Survey, surveyId?: string) {
+    if (surveyId) {
+      const surveyIndex = this.surveyList.findIndex(
+        (survey) => survey.id == surveyId
+      );
+      const questions = this.surveyList[surveyIndex].questions;
+      Object.assign(this.surveyList[surveyIndex], newSurvey, { questions });
+      console.log(this.surveyList[surveyIndex]);
+    } else this.surveyList.push(newSurvey);
     this.api.storeSurveyList(this.surveyList);
   }
 
@@ -145,5 +152,25 @@ export class SurveyService {
       this.surveyList[surveyIndex].questions.splice(questionIndex, 1);
     }
     this.api.storeSurveyList(this.surveyList);
+  }
+
+  deleteSurvey(surveyId: string): boolean {
+    const surveyIndex = this.surveyList.findIndex(
+      (suvrey) => suvrey.id == surveyId
+    );
+    if (surveyIndex >= 0) {
+      this.surveyList.splice(surveyIndex, 1);
+
+      //delete survey responses
+      const remainingResponse = this.responseList.filter(
+        (response) => response.surveyId !== surveyId
+      );
+      this.responseList.splice(0, this.responseList.length);
+      this.responseList.push(...remainingResponse);
+      this.api.storeSurveyList(this.surveyList);
+      this.api.storeResponsesList(this.responseList);
+    }
+
+    return false;
   }
 }

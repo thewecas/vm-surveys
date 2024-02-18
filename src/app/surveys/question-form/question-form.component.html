@@ -3,6 +3,7 @@
   <mat-form-field appearance="outline">
     <mat-label>Question</mat-label>
     <textarea
+      aria-label="Question"
       [autoResize]="100"
       matInput
       [readonly]="obj.readOnly"
@@ -48,7 +49,12 @@
       <div class="option">
         <mat-form-field appearance="outline">
           <mat-label>Option {{ i + 1 }}</mat-label>
-          <input matInput [readonly]="obj.readOnly" [formControlName]="i" />
+          <input
+            aria-label="Instructions"
+            matInput
+            [readonly]="obj.readOnly"
+            [formControlName]="i"
+          />
           <mat-error *ngIf="options.invalid">Required</mat-error>
         </mat-form-field>
         <button
@@ -74,6 +80,7 @@
   <mat-form-field appearance="outline">
     <mat-label>Instructions (Optional)</mat-label>
     <textarea
+      aria-label="Instructions"
       class="scroll"
       [autoResize]="100"
       matInput

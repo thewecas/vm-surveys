@@ -4,8 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./surveys/surveys.module').then(m => m.SurveysModule)
-  }
+    loadChildren: () =>
+      import('./surveys/surveys.module').then((m) => m.SurveysModule),
+  },
 ];
 
 @NgModule({

@@ -5,14 +5,31 @@
       <p>{{ survey.description }}</p>
     </div>
     <div class="btn-container">
-      <button
+      <a
+        type="button"
         mat-stroked-button
         color="primary"
+        (click)="handleEditSurvey(survey.id)"
+      >
+        Edit
+      </a>
+      <a
+        type="button"
+        mat-stroked-button
+        color="warn"
+        (click)="handleDelete(survey.id)"
+      >
+        Delete
+      </a>
+      <a
+        type="button"
+        mat-stroked-button
+        color="primary"
+        target="_blank"
         [routerLink]="['/take-survey', survey.id]"
       >
         Take Survey
-      </button>
-    
+      </a>
     </div>
   </div>
 
