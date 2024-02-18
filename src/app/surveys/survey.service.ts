@@ -173,4 +173,9 @@ export class SurveyService {
 
     return false;
   }
+
+  resetData() {
+    localStorage.clear();
+    window.location.reload();
+  }
 }
